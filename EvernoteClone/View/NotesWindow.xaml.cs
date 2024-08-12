@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -56,7 +57,18 @@ namespace EvernoteClone.View
 
         private void boldButton_Click(object sender, RoutedEventArgs e)
         {
-            contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+            bool isButtonChecked = (sender as ToggleButton).IsChecked ?? false;
+
+            if (isButtonChecked)
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+            else
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
+        }
+
+        private void contentRichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var selectedWeight = contentRichTextBox.Selection.GetPropertyValue(FontWeightProperty);
+            boldButton.IsChecked = (selectedWeight != DependencyProperty.UnsetValue) && (selectedWeight.Equals(FontWeights.Bold));
         }
     }
 }
