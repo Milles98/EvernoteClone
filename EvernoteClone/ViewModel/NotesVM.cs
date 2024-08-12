@@ -4,16 +4,20 @@ using EvernoteClone.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EvernoteClone.ViewModel
 {
-    public class NotesVM
+    public class NotesVM : INotifyPropertyChanged
     {
         public ObservableCollection<Notebook> Notebooks { get; set; }
+        public ObservableCollection<Note> Notes { get; set; }
         private Notebook selectedNotebook;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public Notebook SelectedNotebook
         {
@@ -24,7 +28,6 @@ namespace EvernoteClone.ViewModel
                 //TODO: get the notes
             }
         }
-        public ObservableCollection<Note> Notes { get; set; }
 
         public NewNotebookCommand NewNotebookCommand { get; set; }
         public NewNoteCommand NewNoteCommand { get; set; }
@@ -37,9 +40,9 @@ namespace EvernoteClone.ViewModel
 
         public void CreateNotebook()
         {
-            Notebook newNotebook = new Notebook()
+            Notebook newNotebook = new Notebook
             {
-                Name = "New notebook"
+                Name = "Notebook"
             };
 
             DatabaseHelper.Insert(newNotebook);
@@ -47,7 +50,7 @@ namespace EvernoteClone.ViewModel
 
         public void CreateNote(int notebookId)
         {
-            Note newNote = new Note()
+            Note newNote = new Note
             {
                 NotebookId = notebookId,
                 CreatedTime = DateTime.Now,
