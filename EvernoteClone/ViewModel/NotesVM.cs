@@ -15,27 +15,33 @@ namespace EvernoteClone.ViewModel
     {
         public ObservableCollection<Notebook> Notebooks { get; set; }
         public ObservableCollection<Note> Notes { get; set; }
+
         private Notebook selectedNotebook;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public Notebook SelectedNotebook
         {
             get { return selectedNotebook; }
             set
             {
                 selectedNotebook = value;
-                //TODO: get the notes
+                OnPropertyChanged(nameof(SelectedNotebook));
+                GetNotes();
             }
         }
 
         public NewNotebookCommand NewNotebookCommand { get; set; }
         public NewNoteCommand NewNoteCommand { get; set; }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public NotesVM()
         {
             NewNotebookCommand = new NewNotebookCommand(this);
             NewNoteCommand = new NewNoteCommand(this);
+
+            Notebooks = new ObservableCollection<Notebook>();
+            Notes = new ObservableCollection<Note>();
+
+            GetNoteBooks();
         }
 
         public void CreateNotebook()
@@ -46,6 +52,8 @@ namespace EvernoteClone.ViewModel
             };
 
             DatabaseHelper.Insert(newNotebook);
+
+            GetNoteBooks();
         }
 
         public void CreateNote(int notebookId)
@@ -55,10 +63,44 @@ namespace EvernoteClone.ViewModel
                 NotebookId = notebookId,
                 CreatedTime = DateTime.Now,
                 UpdatedTime = DateTime.Now,
-                Title = "New note",
+                Title = $"Note for {DateTime.Now.ToString()}"
             };
 
             DatabaseHelper.Insert(newNote);
+
+            GetNotes();
+        }
+
+        private void GetNoteBooks()
+        {
+            var notebooks = DatabaseHelper.Read<Notebook>();
+
+            Notebooks.Clear();
+
+            foreach (var notebook in notebooks)
+            {
+                Notebooks.Add(notebook);
+            }
+        }
+
+        private void GetNotes()
+        {
+            if (SelectedNotebook != null)
+            {
+                var notes = DatabaseHelper.Read<Note>().Where(n => n.NotebookId == SelectedNotebook.Id).ToList();
+
+                Notes.Clear();
+
+                foreach (var note in notes)
+                {
+                    Notes.Add(note);
+                }
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
