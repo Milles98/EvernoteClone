@@ -29,7 +29,7 @@ namespace EvernoteClone.ViewModel.Commands
         public void Execute(object? parameter)
         {
             Notebook selectedNotebook = parameter as Notebook;
-            //TODO: create new note
+            VM.CreateNote(selectedNotebook.Id);
         }
     }
 }
