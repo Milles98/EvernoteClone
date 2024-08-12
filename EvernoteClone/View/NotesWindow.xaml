@@ -18,7 +18,9 @@
             <MenuItem Header="File">
                 <MenuItem Header="New notebook"
                           Command="{Binding NewNotebookCommand}"/>
-                <MenuItem Header="New note"/>
+                <MenuItem Header="New note"
+                          Command="{Binding NewNoteCommand}"
+                          CommandParameter="{Binding SelectedNotebook}"/>
                 <Separator/>
                 <MenuItem Header="Exit"
                           Click="MenuItem_Click"/>
