@@ -61,8 +61,7 @@
                 <Button x:Name="boldButton"
                         Click="boldButton_Click">
                     <TextBlock Text="B"
-                               FontWeight="Bold"
-/>
+                               FontWeight="Bold"/>
                 </Button>
             </ToolBar>
         </ToolBarTray>
