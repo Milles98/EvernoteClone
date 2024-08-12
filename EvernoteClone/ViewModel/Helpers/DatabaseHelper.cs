@@ -11,7 +11,7 @@ namespace EvernoteClone.ViewModel.Helpers
 {
     public class DatabaseHelper
     {
-        private static string dbFile = Path.Combine(Environment.CurrentDirectory, "notesDb.db3");
+        private static string dbFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "notesDb.db3");
 
         public static bool Insert<T>(T item)
         {
