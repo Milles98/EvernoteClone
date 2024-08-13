@@ -69,6 +69,12 @@ namespace EvernoteClone.View
         {
             var selectedWeight = contentRichTextBox.Selection.GetPropertyValue(FontWeightProperty);
             boldButton.IsChecked = (selectedWeight != DependencyProperty.UnsetValue) && (selectedWeight.Equals(FontWeights.Bold));
+
+            var selectedStyle = contentRichTextBox.Selection.GetPropertyValue(StyleProperty);
+            italicButton.IsChecked = (selectedStyle != DependencyProperty.UnsetValue) && (selectedStyle.Equals(FontStyles.Italic));
+
+            var selectedDecoration = contentRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+            underlineButton.IsChecked = (selectedDecoration != DependencyProperty.UnsetValue) && (selectedDecoration.Equals(TextDecorations.Underline));
         }
 
         private void italicButton_Click(object sender, RoutedEventArgs e)
