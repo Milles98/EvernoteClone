@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:EvernoteClone.View"
         xmlns:uc="clr-namespace:EvernoteClone.View.UserControls"
         xmlns:vm="clr-namespace:EvernoteClone.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="NotesWindow" Height="450" Width="800">
 
@@ -52,8 +53,15 @@
                                 </ContextMenu>
                             </uc:DisplayNotebook.ContextMenu>
                         </uc:DisplayNotebook>
-                        <TextBox Text="{Binding Name}" 
-                                 Visibility="{Binding Source={StaticResource vm}, Path=IsVisible}"/>
+                        <TextBox Text="{Binding Name, Mode=TwoWay}"
+                                 Visibility="{Binding Source={StaticResource vm}, Path=IsVisible}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding Source={StaticResource vm}, Path=EndEditingCommand}"
+                                                           CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
