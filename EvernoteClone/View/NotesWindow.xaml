@@ -39,8 +39,7 @@
         <ListView DockPanel.Dock="Left"
                   Background="MidnightBlue"
                   Width="140"
-                  SelectedItem="{Binding SelectedNotebook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedValue="{Binding SelectedNotebook, Mode=TwoWay}"
+                  SelectedValue="{Binding SelectedNotebook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Notebooks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -68,6 +67,7 @@
         </ListView>
         <ListView DockPanel.Dock="Left"
                   Width="140"
+                  SelectedValue="{Binding SelectedNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Notes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -101,6 +101,8 @@
                           Width="50"
                           IsEditable="True"
                           TextBoxBase.TextChanged="fontSizeComboBox_TextChanged"/>
+                <Button Content="Save"
+                        Click="Button_Click"/>
             </ToolBar>
         </ToolBarTray>
         <Grid>
