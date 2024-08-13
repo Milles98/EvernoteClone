@@ -30,7 +30,6 @@ namespace EvernoteClone.ViewModel
         }
 
         private Visibility _isVisible;
-
         public Visibility IsVisible
         {
             get { return _isVisible; }
@@ -40,6 +39,18 @@ namespace EvernoteClone.ViewModel
                 OnPropertyChanged(nameof(IsVisible));
             }
         }
+
+        private Note _selectedNote;
+        public Note SelectedNote
+        {
+            get { return _selectedNote; }
+            set
+            {
+                _selectedNote = value;
+                OnPropertyChanged(nameof(SelectedNote));
+            }
+        }
+
 
         public NewNotebookCommand NewNotebookCommand { get; set; }
         public NewNoteCommand NewNoteCommand { get; set; }
