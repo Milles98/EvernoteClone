@@ -48,6 +48,7 @@ namespace EvernoteClone.ViewModel
             {
                 _selectedNote = value;
                 OnPropertyChanged(nameof(SelectedNote));
+                SelectedNoteChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -58,6 +59,7 @@ namespace EvernoteClone.ViewModel
         public EndEditingCommand EndEditingCommand { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler SelectedNoteChanged;
 
         public NotesVM()
         {
